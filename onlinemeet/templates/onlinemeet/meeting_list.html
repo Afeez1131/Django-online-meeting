@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List of Meetings.</title>
+</head>
+<body>
+    <h3>All Meetings created by: {{request.user | upper}}</h3>
+    {% if message %}
+        {{message}}
+    {% endif %}
+
+<table>
+    <thead>
+    <tr>
+        <th>Creator</th>
+        <th>Title</th>
+        <th>Starting date time</th>
+        <th>Ending Date & Time</th>
+        <th>Join</th>
+    </tr>
+    </thead>
+    {% for meeting in meetings %}
+    <tbody>
+
+
+    <tr>
+    <td>{{meeting.creator}}</td>
+    <td>{{meeting.title_of_meeting}}</td>
+    <td>{{meeting.starting_date_time}}</td>
+    <td>{{meeting.ending_date_time}}</td>
+    <td><a href="{% url 'meeting' meeting.unique_meeting_name %}">Join Meeting</a>
+        <td><input type="hidden" name="meeting_{{forloop.counter}}" id="{{meeting.id}}" value="{{ request.scheme }}://{{ request.get_host }}{% url 'meeting' meeting.unique_meeting_name %}" id="meeting_link"> 
+            <button onclick="myFunction('{{meeting.id}}')">Copy Link</button></td>
+    </tr>
+    </tbody>
+    {% endfor %}
+    
+</table>
+
+    <script>
+        function myFunction(mid) {
+            console.log(mid);
+            //var myButtons = document.querySelectorAll('.myclass');
+            var copyText = document.getElementById(mid);
+            console.log(copyText);
+            //copyText.select();
+            //copyText.setSelectionRange(0, 99999);
+        
+            navigator.clipboard.writeText(copyText.value);
+        alert("Meeting Link copied successfully to clipboard. ");
+        }
+    </script>
+</body>
+</html>
+

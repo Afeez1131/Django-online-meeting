@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LIVE MEETING PAGE</title>
+</head>
+<body>
+<h2>Title: {{meeting.title_of_meeting}}</h2>
+                <div id="meet">
+
+                </div>
+{% block script %}
+<script src='https://meet.jit.si/external_api.js'></script>
+<script>
+    const domain = 'meet.jit.si'
+    const options = {
+        roomName: 'JitsiMeetAPIExample',
+        width: 1000,
+        height: 800,
+        parentNode: document.querySelector('#meet'),
+        lang: 'en',  // default language, change the language to english
+        configOverwrite: {
+            disableRemoteMute: true,  //DISABLE MUTE ALL FEATURE IN JITSI
+            remoteVideoMenu: {
+                // If set to true the 'Kick out' button will be disabled for the guest.
+                disableKick: true
+            },
+        },
+        interfaceConfigOverwrite: {
+            filmStripOnly: true,
+            /* the toolbars that will be visible for the guest of the meeting.*/
+            TOOLBAR_BUTTONS: ['microphone', 'camera', 'closedcaptions', 'desktop', 
+            'fullscreen', 'fodeviceselection', 'chat', 'etherpad', 'raisehand', 'filmstrip', 'shortcuts', 'tileview','download', 'help','hangup'], 
+        }
+    };
+const api = new JitsiMeetExternalAPI(domain, options);
+</script>
+
+{% endblock %}
+</body>
+
+</html>
